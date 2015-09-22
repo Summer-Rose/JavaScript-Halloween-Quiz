@@ -1,0 +1,15 @@
+#quiz {
+}
+
+.choice, .selection {
+  display: inline;
+}
+
+.selection{
+  margin-right: 5px;
+}
+
+body{
+  background-image: url("../img/background.png");
+  background-size:cover;
+}
