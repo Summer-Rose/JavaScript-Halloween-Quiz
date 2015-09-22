@@ -45,6 +45,4 @@ var QuizUI = {
     var currentQuestionNumber = quiz.currentQuestionIndex + 1;
     this.populateIdWithHTML("progress", "Question" + currentQuestionNumber + "of" + quiz.questions.lenghth);
   }
-
-
 }

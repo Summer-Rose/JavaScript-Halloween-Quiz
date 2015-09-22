@@ -3,3 +3,7 @@ function Quiz(questions) {
   this.questions = questions;
   this.currentQuestionIndex = 0;
 }
+
+function startQuiz() {
+  QuizUI.displayNext();
+}

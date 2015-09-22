@@ -8,3 +8,9 @@ var question1choices = [
 var question1 = new Question ("Do you like bows?", question1choices);
 
 var quiz = new Quiz(question1);
+
+$(document).ready(function() {
+  $("#startQuiz").click(function() {
+    alert("hi");
+  });
+});
