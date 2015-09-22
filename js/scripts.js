@@ -1,17 +1,7 @@
-//CHOICE, QUESTION & QUIZ OBJECT CONSTRUCTORS
-// function Choice(choice) {
-//   this.choice = choice;
-//   //this.value = value;
-// };
-
-function Question(question, choices, answer) {
+//QUESTION & QUIZ OBJECT CONSTRUCTORS
+function Question(question, choices) {
   this.question = question;
   this.choices = choices;
-  this.answer = answer;
-};
-
-Question.prototype.isCorrectAnswer = function(choice) {
-  return this.answer === choice;
 };
 
 function Quiz(questions) {
@@ -20,10 +10,8 @@ function Quiz(questions) {
   this.currentQuestionIndex = 0;
 };
 
-Quiz.prototype.guess = function(answer) {
-  if(this.getCurrentQuestion().isCorrectAnswer(answer)) {
-    this.score++;
-  }
+Quiz.prototype.addValueToScore = function(choiceValue) {
+  this.score += choiceValue;
   this.currentQuestionIndex++;
 }
 
@@ -31,33 +19,17 @@ Quiz.prototype.getCurrentQuestion = function() {
   return this.questions[this.currentQuestionIndex];
 };
 
-// Quiz.prototype.selection = function() {
-//   this.score += this.Question.Choice.value;
-//   debugger;
-//   //take value and add to quiz score
-//   this.currentQuestionIndex++;
-// }
-
 Quiz.prototype.hasEnded = function() {
   return this.currentQuestionIndex >= this.questions.length;
 };
 
-//CREATE QUESTIONS AND CHOICES
-// var question1choices = [
-//   new Choice("I like bownanas"),
-//   new Choice("My favorite book character wears a bow!"),
-//   new Choice("Only when they are covered in blood!"),
-//   new Choice("They're purrrrrfect.")
-// ];
-
+//ADD QUESTIONS TO INSTANCE OF QUIZ
 var questions = [
-  new Question("Do you like bows?", ["I like bownanas", "My favorite book character wears a bow!", "Only when they are covered in blood!", "They're purrrrrfect."], "They're purrrrrfect."),
-  new Question("Do you like taking over the world?", ["I'd rather read a book", "Once I'm finished feasting on mankind", "I'm more into taking over bridges", "Vote for me and we can take over the world together!"], "Vote for me and we can take over the world together!")
+  new Question("Do you like bows?", [{ choice: "I like bownanas", value: 2 }, { choice:"My favorite book character wears a bow!", value: 3}, {choice: "Only when they are covered in blood!", value: 4}, { choice:"They're purrrrrfect.", value: 5}]),
+  new Question("Do you like taking over the world?", [{ choice: "I'd rather read a book", value: 2 }, { choice: "Once I'm finished feasting on mankind", value: 2 }, { choice: "I'm more into taking over bridges", value: 2 }, { choice: "Vote for me and we can take over the world together!", value: 2 }])
 ]
 
 var quiz = new Quiz(questions);
-
-
 
 //FEED INFO TO UI
 var QuizUI = {
@@ -79,8 +51,8 @@ var QuizUI = {
     var choices = quiz.getCurrentQuestion().choices;
 
     for(var i = 0; i < choices.length; i++) {
-      this.populateIdWithHTML("choice" + i, choices[i]);
-      this.guessHandler("guess" + i, choices[i]);
+      this.populateIdWithHTML("choice" + i, choices[i].choice);
+      this.selectionHandler("selection" + i, choices[i].value);
     }
   },
 
@@ -95,10 +67,10 @@ var QuizUI = {
     element.innerHTML = text;
   },
 
-  guessHandler: function(id, guess) {
+  selectionHandler: function(id, choiceValue) {
     var button = document.getElementById(id);
     button.onclick = function() {
-      quiz.guess(guess);
+      quiz.addValueToScore(choiceValue);
       QuizUI.displayNext();
     }
   },
@@ -109,10 +81,6 @@ var QuizUI = {
   }
 }
 
-
 $(document).ready(function() {
-
     QuizUI.displayNext();
-
-
 });
