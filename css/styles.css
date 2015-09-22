@@ -13,3 +13,34 @@ body{
   background-image: url("../img/background.png");
   background-size:cover;
 }
+
+#resultingImage {
+  display: none;
+  width: 100px;
+  height: 100px;
+}
+
+.hello-kitty {
+  background-image: url("../img/hello-kitty.gif");
+  background-size: contain;
+}
+
+.banana {
+  background-image: url("../img/banana.jpg");
+  background-size: contain;
+}
+
+.politician {
+  background-image: url("../img/politician.jpg");
+  background-size: contain;
+}
+
+.troll {
+  background-image: url("../img/troll.jpg");
+  background-size: contain;
+}
+
+.vampire {
+  background-image: url("../img/vampire.jpg");
+  background-size: contain;
+}
