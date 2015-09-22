@@ -29,9 +29,9 @@ Quiz.prototype.calculateScoreAverage = function() {
 
 //ADD QUESTIONS TO INSTANCE OF QUIZ
 var questions = [
-  new Question("Do you like bows?", [{ choice: "I like bownanas", value: 2 }, { choice:"My favorite book character wears a bow!", value: 3}, {choice: "Only when they are covered in blood!", value: 4}, { choice:"They're purrrrrfect.", value: 5}]),
-  new Question("Do you like taking over the world?", [{ choice: "I'd rather read a book", value: 2 }, { choice: "Once I'm finished feasting on mankind", value: 2 }, { choice: "I'm more into taking over bridges", value: 2 }, { choice: "Vote for me and we can take over the world together!", value: 2 }])
-  //new Question("What's your favorite fruit?", [{ choice: "I'm crazy for bananas", value: 2 }, { choice: "Oranges. BLOOD oranges", value}])
+  new Question("Do you like bows?", [{ choice: "I like bownanas", value: 1 }, { choice:"My favorite book character wears a bow!", value: 2}, {choice: "Only when they are covered in blood!", value: 3}, { choice:"They're purrrrrfect.", value: 4}]),
+  new Question("Do you like taking over the world?", [{ choice: "I'd rather read a book", value: 1 }, { choice: "Once I'm finished feasting on mankind", value: 2 }, { choice: "I'm more into taking over bridges", value: 3 }, { choice: "Vote for me and we can take over the world together!", value: 4 }]),
+  new Question("What's your favorite fruit?", [{ choice: "I'm crazy for bananas", value: 1 }, { choice: "Oranges. BLOOD oranges", value: 2}, { choice: "Everything except poison apples", value: 3}, { choice: "Whatever I find under the bridge", value: 4}])
 ]
 
 var quiz = new Quiz(questions);
@@ -40,8 +40,8 @@ var quiz = new Quiz(questions);
 var QuizUI = {
   displayNext: function() {
     if(quiz.hasEnded()) {
-      this.displayScore();
       this.displayAverage();
+      //this.displayImage();
     } else {
       this.displayQuestion();
       this.displayChoices();
@@ -61,16 +61,45 @@ var QuizUI = {
       this.selectionHandler("selection" + i, choices[i].value);
     }
   },
-
-  displayScore: function() {
-    var gameOverHTML = "<h1>Quiz Finished</h1>";
-    gameOverHTML += "<h2>" + quiz.score + "</h2>";
-    this.populateIdWithHTML("quiz", gameOverHTML);
-  },
+  //
+  // displayScore: function() {
+  //   var gameOverHTML = "<h1>Quiz Finished</h1>";
+  //   gameOverHTML += "<h2>" + quiz.score + "</h2>";
+  //   this.populateIdWithHTML("quiz", gameOverHTML);
+  // },
 
   displayAverage: function() {
-    var html = "<h2>" + quiz.calculateScoreAverage() + "</h2>";
-    this.populateIdWithHTML("quiz", html);
+    var average = quiz.calculateScoreAverage();
+    var results = "";
+
+    if (average === 1) {
+      results += "You should be Hello Kitty";
+      $("#resultingImage").show();
+      $("#quiz").hide();
+      $("#resultingImage").addClass("hello-kitty");
+    } else if (average === 2) {
+      results += "You should be a banana";
+      $("#resultingImage").show();
+      $("#quiz").hide();
+      $("#resultingImage").addClass("banana");
+    } else if (average === 3) {
+      results += "You should be a vampire";
+      $("#resultingImage").show();
+      $("#quiz").hide();
+      $("#resultingImage").addClass("vampire");
+    } else if (average === 4) {
+      results += "You should be a troll";
+      $("#resultingImage").show();
+      $("#quiz").hide();
+      $("#resultingImage").addClass("troll");
+    } else {
+      results += "You should be a politician";
+      $("#resultingImage").show();
+      $("#quiz").hide();
+      $("#resultingImage").addClass("politician");
+    }
+
+    this.populateIdWithHTML("results", results);
   },
 
   populateIdWithHTML: function(id, text) {
